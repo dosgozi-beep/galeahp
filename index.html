@@ -403,10 +403,10 @@
     /* ---------- Dialogue (translucent glass card, top, below brand) ---------- */
     .dialogue {
       position: fixed;
-      bottom: 3vh;           /* near the bottom */
+      bottom: 64vh;          /* above teten's head */
       left: 50%;
-      transform: translateX(-50%) translateY(8px);
-      width: min(620px, 88vw);
+      transform: translateX(-50%) translateY(-8px);
+      width: min(560px, 88vw);
       z-index: 5;
       pointer-events: none;
       opacity: 0;
@@ -419,98 +419,107 @@
       cursor: pointer;
     }
     .dialogue.visible:hover .dialogue-card {
-      background: rgba(20, 14, 8, 0.18);
-      border-color: rgba(255, 220, 170, 0.32);
+      transform: translateY(-2px);
+      box-shadow:
+        0 32px 50px -15px rgba(0, 0, 0, 0.55),
+        0 0 0 3px #2a1a0c;
     }
     .dialogue.visible:active .dialogue-card {
-      transform: translateY(1px);
+      transform: translateY(0);
     }
+    /* Manga-style white speech bubble */
     .dialogue-card {
       position: relative;
-      background: rgba(20, 14, 8, 0.10);
-      backdrop-filter: blur(10px) saturate(130%);
-      -webkit-backdrop-filter: blur(10px) saturate(130%);
-      border: 1px solid rgba(255, 220, 170, 0.22);
-      border-radius: 18px;
-      padding: 22px 26px 22px;
+      background: #ffffff;
+      border: 3px solid #2a1a0c;
+      border-radius: 24px;
+      padding: 18px 22px 22px;
       box-shadow:
-        0 25px 50px -15px rgba(0, 0, 0, 0.45),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-      transition: background 0.25s ease, border-color 0.25s ease, transform 0.1s ease;
+        0 24px 48px -16px rgba(0, 0, 0, 0.55),
+        0 0 0 0 #2a1a0c;
+      transition: transform 0.15s ease, box-shadow 0.2s ease;
     }
-    /* Speech tail now points UP toward Teten (above the card) */
+    /* Speech tail pointing DOWN toward Teten — two-layer for clean black border */
     .dialogue-card::before {
       content: '';
       position: absolute;
-      top: -9px;
+      bottom: -22px;
       left: 50%;
-      transform: translateX(-50%) rotate(45deg);
-      width: 16px;
-      height: 16px;
-      background: rgba(20, 14, 8, 0.10);
-      backdrop-filter: blur(10px) saturate(130%);
-      -webkit-backdrop-filter: blur(10px) saturate(130%);
-      border-left: 1px solid rgba(255, 220, 170, 0.22);
-      border-top: 1px solid rgba(255, 220, 170, 0.22);
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-top: 22px solid #2a1a0c;
+      z-index: 1;
+    }
+    .dialogue-card::after {
+      content: '';
+      position: absolute;
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 14px solid transparent;
+      border-right: 14px solid transparent;
+      border-top: 17px solid #ffffff;
+      z-index: 2;
     }
     .dialogue-name {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       font-family: 'Klee One', serif;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 12px;
       letter-spacing: 0.2em;
-      color: rgba(255, 200, 130, 0.95);
-      margin-bottom: 8px;
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+      color: #8a4a22;
+      margin-bottom: 6px;
     }
     .dialogue-name::before {
       content: '';
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: rgba(255, 200, 130, 0.95);
-      box-shadow: 0 0 10px rgba(255, 200, 130, 0.7);
+      background: #c89834;
     }
-    /* Skip button — sits in the top-right of the dialogue card */
+    /* Skip button — top-right of bubble */
     .dialogue-skip {
       position: absolute;
-      top: 14px;
-      right: 14px;
-      background: rgba(253, 247, 236, 0.12);
-      border: 1px solid rgba(253, 247, 236, 0.25);
-      color: rgba(253, 247, 236, 0.85);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      padding: 5px 11px;
+      top: 10px;
+      right: 12px;
+      background: #fdf7ec;
+      border: 1.5px solid #2a1a0c;
+      color: #2a1a0c;
+      padding: 4px 10px;
       border-radius: 999px;
       font-family: 'Zen Kaku Gothic New', sans-serif;
       font-size: 9px;
+      font-weight: 600;
       letter-spacing: 0.22em;
       cursor: pointer;
-      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-      z-index: 2;
+      transition: background 0.2s ease, transform 0.15s ease;
+      z-index: 3;
     }
     .dialogue-skip:hover {
-      background: rgba(253, 247, 236, 0.24);
-      border-color: rgba(253, 247, 236, 0.45);
-      color: var(--cream);
+      background: #2a1a0c;
+      color: #fdf7ec;
+      transform: translateY(-1px);
     }
     .dialogue-text {
       font-family: 'Klee One', serif;
-      font-size: 17px;
+      font-size: 16px;
       line-height: 1.85;
-      color: rgba(253, 247, 236, 0.97);
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+      color: #2a1a0c;
       min-height: 3.5em;
       letter-spacing: 0.02em;
     }
     .dialogue-text .cursor {
       display: inline-block;
       width: 7px;
-      height: 17px;
-      background: rgba(255, 220, 170, 0.95);
+      height: 16px;
+      background: #8a4a22;
       vertical-align: -2px;
       margin-left: 3px;
       animation: blink 0.8s steps(2) infinite;
@@ -519,19 +528,18 @@
       position: absolute;
       bottom: 6px;
       right: 14px;
-      color: rgba(255, 220, 170, 0.85);
+      color: #8a4a22;
       font-size: 13px;
       animation: nudge 1.1s ease-in-out infinite;
       opacity: 0;
       letter-spacing: 0.1em;
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
     }
     .dialogue-next.show { opacity: 0.9; }
     .dialogue-next .hint {
       font-size: 9px;
       letter-spacing: 0.3em;
       margin-right: 5px;
-      opacity: 0.75;
+      opacity: 0.7;
       font-family: 'Zen Kaku Gothic New', sans-serif;
     }
 
@@ -871,6 +879,59 @@
       width: 70%;
       height: 70%;
       object-fit: contain;
+    }
+
+    /* ---------- Partners "coming soon" card ---------- */
+    .partners-coming-soon {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 22px 14px 18px;
+      background: linear-gradient(135deg,
+        rgba(253, 247, 236, 0.94) 0%,
+        rgba(238, 220, 188, 0.94) 100%);
+      border: 1.5px dashed rgba(138, 84, 24, 0.55);
+      border-radius: 14px;
+      max-width: 480px;
+      font-family: 'Klee One', serif;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow:
+        0 18px 35px -14px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    }
+    .partners-coming-soon-icon {
+      font-size: 28px;
+      width: 44px;
+      height: 44px;
+      flex: 0 0 44px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at 30% 30%,
+        rgba(255, 240, 210, 0.95),
+        rgba(214, 163, 104, 0.7) 70%);
+      border: 1px solid rgba(138, 84, 24, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+    .partners-coming-soon-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      background: #8a4a22;
+      color: #fdf7ec;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      flex: 0 0 auto;
+    }
+    .partners-coming-soon-text {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--ink);
+      flex: 1;
+      letter-spacing: 0.03em;
     }
 
     /* ---------- Products grid (shop scene) ---------- */
@@ -1517,9 +1578,17 @@
 
     /* ---------- Responsive ---------- */
     @media (max-width: 720px) {
-      .dialogue { bottom: 3vh; top: auto; width: 92vw; }
-      .dialogue-card { padding: 14px 16px 14px; }
-      .dialogue-text { font-size: 14px; line-height: 1.65; min-height: 3em; }
+      .dialogue { bottom: 58vh; top: auto; width: 92vw; }
+      .dialogue-card { padding: 14px 16px 16px; border-radius: 18px; }
+      .dialogue-card::before {
+        bottom: -18px;
+        border-left-width: 14px; border-right-width: 14px; border-top-width: 18px;
+      }
+      .dialogue-card::after {
+        bottom: -13px;
+        border-left-width: 11px; border-right-width: 11px; border-top-width: 14px;
+      }
+      .dialogue-text { font-size: 13px; line-height: 1.7; min-height: 3em; }
       .character { bottom: 18vh; height: 38vh; min-height: 200px; }
       .char-shadow { bottom: calc(18vh - 18px); width: min(160px, 22vh); height: 22px; }
       .object { bottom: 42vh; width: 70px; }
@@ -1558,6 +1627,10 @@
       .partners-heading { font-size: 10px; margin-bottom: 6px; }
       .partner-logo { width: 44px; height: 44px; font-size: 20px; }
       .partners-grid { gap: 6px; }
+      .partners-coming-soon { padding: 12px 16px 12px 14px; gap: 12px; }
+      .partners-coming-soon-icon { width: 36px; height: 36px; flex: 0 0 36px; font-size: 22px; }
+      .partners-coming-soon-badge { font-size: 9px; padding: 2px 8px; letter-spacing: 0.18em; }
+      .partners-coming-soon-text { font-size: 11.5px; line-height: 1.55; }
       /* Products: stack to full width and shrink padding */
       .products { width: 96vw; }
       .product-tile { min-width: 0; flex: 1 1 100%; padding: 10px 14px 10px 10px; gap: 10px; }
@@ -1589,7 +1662,7 @@
       .character { height: 36vh; bottom: 22vh; }
       .char-shadow { bottom: calc(22vh - 18px); }
       .object { bottom: 40vh; }
-      .dialogue { bottom: 2vh; }
+      .dialogue { bottom: 60vh; }
     }
   </style>
 </head>
@@ -2152,14 +2225,8 @@
         },
         partners: {
           heading: '連携地域団体',
-          // Placeholder ? logos — clicking opens the "coming soon" detail scene
-          items: [
-            { name: 'Org 1', action: 'goto:partner_detail', logo: '?' },
-            { name: 'Org 2', action: 'goto:partner_detail', logo: '?' },
-            { name: 'Org 3', action: 'goto:partner_detail', logo: '?' },
-            { name: 'Org 4', action: 'goto:partner_detail', logo: '?' },
-            { name: 'Org 5', action: 'goto:partner_detail', logo: '?' },
-          ],
+          status: 'coming-soon',
+          message: 'ただいま情報を整理しているところだテテ。\nもうしばらく待っててほしいテテ🌱',
         },
       },
       community: {
@@ -2341,12 +2408,30 @@
 
     function showDialogue() { dialogueEl.classList.add('visible'); }
     function hideDialogue() { dialogueEl.classList.remove('visible'); }
+    /**
+     * Tap-lock — temporarily disables clicks on an element to prevent
+     * accidental taps when buttons appear (e.g. user is rapidly tapping
+     * to advance dialogue and a choice button suddenly appears under their finger).
+     * Default 750ms gives the user a moment to register what's on screen.
+     */
+    function tapLock(el, ms = 750) {
+      if (!el) return;
+      el.style.pointerEvents = 'none';
+      setTimeout(() => {
+        if (el) el.style.pointerEvents = '';
+      }, ms);
+    }
+
     function showChoices() {
-      // Hide the dialogue so the choice buttons have the bottom space
-      hideDialogue();
+      // New layout: dialogue is above teten, choices are below teten,
+      // so both can be visible at the same time without overlap.
       choicesEl.classList.add('visible');
       objHouse.classList.add('visible');
       objTreasure.classList.add('visible');
+      // Brief tap-lock so accidental rapid taps don't hit fresh buttons
+      tapLock(choicesEl);
+      tapLock(objHouse);
+      tapLock(objTreasure);
     }
     function hideChoices() {
       choicesEl.classList.remove('visible');
@@ -2443,6 +2528,7 @@
         extLinksEl.appendChild(a);
       });
       extLinksEl.classList.add('visible');
+      tapLock(extLinksEl);
     }
     function hideExtLinks() {
       extLinksEl.classList.remove('visible');
@@ -2484,6 +2570,8 @@
       if (sides.right) populateSideLink(sideLinkRight, sides.right);
       sideLinkLeft.classList.toggle('visible',  !!sides.left);
       sideLinkRight.classList.toggle('visible', !!sides.right);
+      if (sides.left)  tapLock(sideLinkLeft);
+      if (sides.right) tapLock(sideLinkRight);
     }
     function hideSideLinks() {
       sideLinkLeft.classList.remove('visible');
@@ -2496,12 +2584,43 @@
     const partnersGrid = partnersEl.querySelector('.partners-grid');
 
     function showPartners(partners) {
-      if (!partners || !partners.items || !partners.items.length) {
+      if (!partners) {
         hidePartners();
         return;
       }
       partnersHeading.textContent = partners.heading || '';
       partnersGrid.innerHTML = '';
+
+      // Coming-soon mode: show a single "in preparation" card instead of logos
+      if (partners.status === 'coming-soon') {
+        const card = document.createElement('div');
+        card.className = 'partners-coming-soon';
+        const icon = document.createElement('div');
+        icon.className = 'partners-coming-soon-icon';
+        icon.textContent = '🌱';
+        const badge = document.createElement('div');
+        badge.className = 'partners-coming-soon-badge';
+        badge.textContent = '準備中';
+        const text = document.createElement('div');
+        text.className = 'partners-coming-soon-text';
+        // Preserve line breaks from the message
+        (partners.message || 'ただいま準備中だテテ').split('\n').forEach((line, i, arr) => {
+          text.appendChild(document.createTextNode(line));
+          if (i < arr.length - 1) text.appendChild(document.createElement('br'));
+        });
+        card.appendChild(icon);
+        card.appendChild(badge);
+        card.appendChild(text);
+        partnersGrid.appendChild(card);
+        partnersEl.classList.add('visible');
+        tapLock(partnersEl);
+        return;
+      }
+
+      if (!partners.items || !partners.items.length) {
+        hidePartners();
+        return;
+      }
       partners.items.forEach((item) => {
         const a = document.createElement('a');
         a.className = 'partner-logo';
@@ -2532,6 +2651,7 @@
         partnersGrid.appendChild(a);
       });
       partnersEl.classList.add('visible');
+      tapLock(partnersEl);
     }
     function hidePartners() {
       partnersEl.classList.remove('visible');
@@ -2581,6 +2701,7 @@
         productsGrid.appendChild(tile);
       });
       productsEl.classList.add('visible');
+      tapLock(productsEl);
     }
     function hideProducts() {
       productsEl.classList.remove('visible');
@@ -2626,6 +2747,7 @@
       }
       currentProductInfo = info;
       productCta.classList.add('visible');
+      tapLock(productCta);
 
       backToShopBtn.style.display = isProductScene ? '' : 'none';
       photoBtn.style.display = (info && info.mainImage) ? '' : 'none';
@@ -2793,7 +2915,8 @@
       lineIndex++;
       await showLine(lineIndex);
       if (lineIndex === last) {
-        // End of script
+        // End of script — buttons appearing below get their own tap-locks
+        // (no need to lock dialogue since bubble is at top, buttons at bottom).
         if (currentScript.showChoicesAtEnd) {
           showChoices();
         }
@@ -2805,12 +2928,9 @@
         }
         if (currentScript.partners) {
           setTimeout(() => showPartners(currentScript.partners), 500);
-          // Also hide dialogue since partners occupies the bottom area
-          setTimeout(() => hideDialogue(), 500);
         }
         if (currentScript.products) {
           setTimeout(() => showProducts(currentScript.products), 500);
-          setTimeout(() => hideDialogue(), 500);
         }
         if (currentScript.backTo === 'shop' || currentScript.productInfo) {
           setTimeout(() => showProductCta(currentScript), 500);
@@ -2869,11 +2989,9 @@
         }
         if (script.partners) {
           setTimeout(() => showPartners(script.partners), 500);
-          setTimeout(() => hideDialogue(), 500);
         }
         if (script.products) {
           setTimeout(() => showProducts(script.products), 500);
-          setTimeout(() => hideDialogue(), 500);
         }
         if (script.backTo === 'shop' || script.productInfo) {
           setTimeout(() => showProductCta(script), 500);
@@ -2938,11 +3056,9 @@
       }
       if (currentScript.partners) {
         showPartners(currentScript.partners);
-        hideDialogue();
       }
       if (currentScript.products) {
         showProducts(currentScript.products);
-        hideDialogue();
       }
       if (currentScript.backTo === 'shop' || currentScript.productInfo) {
         showProductCta(currentScript);
